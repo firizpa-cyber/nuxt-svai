@@ -3,10 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxt dev",
-    "build": "nuxt build",
+    "dev": "concurrently \"npm run dev:nuxt\" \"npm run dev:nest\"",
+    "dev:nuxt": "nuxt dev",
+    "dev:nest": "npm run start --prefix backend",
+    "build": "npm run build:nuxt && npm run build:nest",
+    "build:nuxt": "nuxt build",
+    "build:nest": "npm run build --prefix backend",
     "preview": "nuxt preview",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",
@@ -14,6 +19,7 @@
     "@nuxtjs/sitemap": "^8.0.15",
     "@vueuse/core": "^12.7.0",
     "@vueuse/nuxt": "^12.7.0",
+    "concurrently": "^8.2.2",
     "lucide-vue-next": "^0.525.0",
     "nodemailer": "^6.9.14",
     "nuxt": "^3.17.4",
@@ -22,7 +28,6 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "nitro": "3.0.260603-beta",
     "@nuxt/devtools": "^2.4.0",
     "@types/node": "^22.16.5",
     "@types/nodemailer": "^8.0.0",

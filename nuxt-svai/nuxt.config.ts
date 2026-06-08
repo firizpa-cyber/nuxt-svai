@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt';
+
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
@@ -42,12 +45,13 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
+  devServer: {
+    port: 3000,
+    proxy: {
+      "/api": { target: "http://localhost:4000", changeOrigin: true }
+    }
   },
+
 
   runtimeConfig: {
     smtpHost: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -94,11 +98,7 @@ export default defineNuxtConfig({
     },
   },
 
-  nitro: {
-    experimental: {
-      wasm: false,
-    },
-  },
+
 
   compatibilityDate: '2025-01-01',
 })

@@ -1,0 +1,10 @@
+{
+  "builds": [
+    { "src": "nuxt.config.ts", "use": "@vercel/nuxt" },
+    { "src": "backend/main.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/backend/$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

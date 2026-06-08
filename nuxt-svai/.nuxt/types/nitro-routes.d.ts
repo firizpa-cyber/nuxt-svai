@@ -13,15 +13,6 @@ declare module "nitropack/types" {
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>
     }
-    '/__site-config__/debug.json': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt-site-config/dist/runtime/server/routes/__site-config__/debug').default>>>>
-    }
-    '/__sitemap__/debug.json': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/sitemap/dist/runtime/server/routes/__sitemap__/debug').default>>>>
-    }
-    '/__sitemap__/debug-production.json': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/sitemap/dist/runtime/server/routes/__sitemap__/debug-production').default>>>>
-    }
     '/__sitemap__/style.xsl': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/sitemap/dist/runtime/server/routes/sitemap.xsl').default>>>>
     }
@@ -30,15 +21,6 @@ declare module "nitropack/types" {
     }
     '/robots.txt': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/robots/dist/runtime/server/routes/robots-txt').default>>>>
-    }
-    '/__robots__/debug.json': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/robots/dist/runtime/server/routes/__robots__/debug').default>>>>
-    }
-    '/__robots__/debug-path.json': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/robots/dist/runtime/server/routes/__robots__/debug-path').default>>>>
-    }
-    '/__robots__/debug-production.json': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxtjs/robots/dist/runtime/server/routes/__robots__/debug-production').default>>>>
     }
     '/__nuxt_island/**': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/#internal/nuxt/island-renderer').default>>>>

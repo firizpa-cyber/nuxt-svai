@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Award, Users, Hammer, Calendar, CheckCircle2 } from "lucide-react";
 
+const ABOUT_PHOTOS = [
+  "photo_13_2026-06-06_11-15-46.jpg",
+  "photo_14_2026-06-06_11-15-46.jpg",
+  "photo_15_2026-06-06_11-15-46.jpg",
+];
+
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -71,6 +77,32 @@ function AboutPage() {
               <li key={t} className="flex gap-2"><CheckCircle2 className="h-5 w-5 text-gold shrink-0" /> {t}</li>
             ))}
           </ul>
+        </div>
+      </div>
+
+      {/* TEAM SECTION */}
+      <div className="mt-16 bg-card rounded-2xl border border-border p-8">
+        <h2 className="font-display text-2xl font-bold text-center mb-6">Наша команда мастеров</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="aspect-[4/3] rounded-lg overflow-hidden border border-border">
+            <img
+              src="/gallery/13bd20c33cf9c4e59907_-1.jpg"
+              alt="Команда мастеров"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Наша команда профессиональных мастеров имеет многолетний опыт монтажа винтовых свай в условиях ХМАО. Мы работаем на собственной технике и гарантируем качество каждого объекта.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {["Опыт более 5 лет", "Собственная техника", "Работа по договору", "Гарантия на работы"].map((t) => (
+                <li key={t} className="flex items-center gap-2 text-foreground">
+                  <div className="h-1.5 w-1.5 rounded-full bg-brand" /> {t}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

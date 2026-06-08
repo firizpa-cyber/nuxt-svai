@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { listMyOrders, checkIsAdmin } from "@/lib/orders.functions";
-import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { formatRub, STATUS_LABEL, STATUS_COLOR } from "@/lib/format";
@@ -25,21 +24,10 @@ function OrdersPage() {
   const ordersQ = useQuery({ queryKey: ["my-orders"], queryFn: () => fetchOrders() });
   const adminQ = useQuery({ queryKey: ["is-admin"], queryFn: () => fetchAdmin() });
 
-  useEffect(() => {
-    const channel = supabase
-      .channel("orders-realtime")
-      .on("postgres_changes", { event: "*", schema: "public", table: "orders", filter: `user_id=eq.${user.id}` }, () => {
-        qc.invalidateQueries({ queryKey: ["my-orders"] });
-        toast.info("Статус заказа обновлён");
-      })
-      .subscribe();
-    return () => { supabase.removeChannel(channel); };
-  }, [user.id, qc]);
-
   async function signOut() {
     await qc.cancelQueries();
     qc.clear();
-    await supabase.auth.signOut();
+    localStorage.removeItem("admin_session");
     navigate({ to: "/auth", replace: true });
   }
 

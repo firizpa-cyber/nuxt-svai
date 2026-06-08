@@ -51,9 +51,10 @@ function CalcPage() {
   const remove = (productId: string) => setCart((c) => c.filter((i) => i.product_id !== productId));
 
   const detailed = useMemo(() => cart.map((i) => {
-    const p = products.find((x) => x.id === i.product_id)!;
+    const p = products.find((x) => x.id === i.product_id);
+    if (!p) return null;
     return { ...i, product: p, lineTotal: i.qty * (Number(p.price) + Number(p.install_price)) };
-  }), [cart, products]);
+  }).filter((i): i is NonNullable<typeof i> => i !== null), [cart, products]);
 
   const totalPiles = detailed.reduce((s, i) => s + i.qty * Number(i.product.price), 0);
   const totalInstall = detailed.reduce((s, i) => s + i.qty * Number(i.product.install_price), 0);

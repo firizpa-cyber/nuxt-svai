@@ -1,13 +1,12 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Phone, Menu, X, User } from "lucide-react";
+import { Phone, Menu, X, User, ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import type { Session } from "@supabase/supabase-js";
 
 const NAV = [
   { to: "/", label: "Главная" },
   { to: "/catalog", label: "Каталог" },
+  { to: "/prices", label: "Цены" },
   { to: "/calculator", label: "Калькулятор" },
   { to: "/about", label: "О компании" },
   { to: "/contacts", label: "Контакты" },
@@ -15,14 +14,33 @@ const NAV = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<string | null>(null);
+  const [cartCount, setCartCount] = useState(0);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-    return () => sub.subscription.unsubscribe();
-  }, []);
+    const session = localStorage.getItem("admin_session");
+    setSession(session);
+  }, [pathname]);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const count = cart.reduce((sum: number, item: any) => sum + item.qty, 0);
+      setCartCount(count);
+    };
+    
+    updateCartCount();
+    
+    const handleStorageChange = () => updateCartCount();
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("cart-updated", handleStorageChange);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("cart-updated", handleStorageChange);
+    };
+  }, [pathname]);
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -31,13 +49,9 @@ export function SiteHeader() {
       <div className="h-1 bg-gradient-to-r from-brand via-gold to-brand" />
       <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="relative h-10 w-10 rounded bg-brand grid place-items-center text-brand-foreground shadow-card">
-            <span className="font-display text-xl font-bold">З</span>
-            <span className="absolute -bottom-1 -right-1 h-3 w-3 rotate-45 bg-gold" />
-          </div>
-          <div className="hidden sm:block">
-            <div className="font-display text-base font-bold leading-tight">Завод винтовых свай</div>
-            <div className="text-[11px] text-muted-foreground uppercase tracking-wider">ХМАО · Сургут</div>
+          <div className="flex flex-col">
+            <img src="/logo.png" alt="Завод винтовых свай" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
+            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">Завод винтовых свай · Сургут</div>
           </div>
         </Link>
 
@@ -63,6 +77,17 @@ export function SiteHeader() {
             <Phone className="h-4 w-4" />
             +7 999 256-88-00
           </a>
+          <Link to={"/cart" as any}>
+            <Button variant="outline" size="sm" className="gap-1.5 relative">
+              <ShoppingCart className="h-4 w-4" />
+              <span className="hidden sm:inline">Корзина</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 bg-brand text-brand-foreground text-xs font-bold rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </Button>
+          </Link>
           <Link to={session ? "/orders" : "/auth"}>
             <Button variant="outline" size="sm" className="gap-1.5">
               <User className="h-4 w-4" />

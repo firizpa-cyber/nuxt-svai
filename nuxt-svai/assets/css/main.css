@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * "Завод винтовых свай" — Russian heritage industrial design system.
+ * Palette: deep blood-red (купеческий), forest pine, warm birch beige, soot black.
+ * Type: Playfair Display (засечный, славянские мотивы) + Inter (промышленный).
+ */
+
+:root {
+  --radius: 0.5rem;
+
+  /* Warm birch paper background */
+  --background: oklch(0.97 0.01 80);
+  --foreground: oklch(0.18 0.02 40);
+
+  --card: oklch(0.99 0.005 80);
+  --card-foreground: oklch(0.18 0.02 40);
+
+  /* Deep купеческий red */
+  --brand: oklch(0.42 0.16 25);
+  --brand-foreground: oklch(0.98 0.01 80);
+
+  --muted: oklch(0.93 0.015 75);
+  --muted-foreground: oklch(0.45 0.02 50);
+
+  --border: oklch(0.85 0.02 70);
+  --input: oklch(0.88 0.02 70);
+
+  --forest: oklch(0.32 0.06 145);
+  --birch: oklch(0.93 0.025 80);
+  --soot: oklch(0.18 0.01 40);
+  --gold: oklch(0.72 0.13 75);
+}
+
+@layer base {
+  * {
+    border-color: oklch(0.85 0.02 70);
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: oklch(0.97 0.01 80);
+    color: oklch(0.18 0.02 40);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  /* Slavic ornament divider */
+  .ornament-divider {
+    position: relative;
+    height: 24px;
+    background-image:
+      radial-gradient(circle at 8px 12px, oklch(0.42 0.16 25) 1.5px, transparent 2px),
+      radial-gradient(circle at 16px 12px, transparent 3px, oklch(0.42 0.16 25) 3.5px, transparent 4.5px);
+    background-size: 24px 24px;
+    background-repeat: repeat-x;
+    background-position: center;
+    opacity: 0.35;
+  }
+
+  /* Wood-plank texture overlay */
+  .wood-texture {
+    background-color: oklch(0.32 0.04 50);
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.3 0.04 50) 0px,
+        oklch(0.34 0.045 55) 2px,
+        oklch(0.3 0.04 48) 4px,
+        oklch(0.33 0.05 52) 8px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 120px,
+        oklch(0.25 0.03 40 / 0.4) 120px,
+        oklch(0.25 0.03 40 / 0.4) 124px
+      );
+  }
+
+  /* Izba roof decorative top border */
+  .izba-roof {
+    background-image:
+      linear-gradient(135deg, oklch(0.42 0.16 25) 25%, transparent 25%),
+      linear-gradient(225deg, oklch(0.42 0.16 25) 25%, transparent 25%);
+    background-size: 24px 12px;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+  }
+
+  /* Birch text color */
+  .text-birch {
+    color: oklch(0.93 0.025 80);
+  }
+
+  /* Gold text */
+  .text-gold {
+    color: oklch(0.72 0.13 75);
+  }
+
+  /* Brand background */
+  .bg-brand {
+    background-color: oklch(0.42 0.16 25);
+  }
+  .bg-brand\/10 {
+    background-color: oklch(0.42 0.16 25 / 0.1);
+  }
+  .bg-brand\/15 {
+    background-color: oklch(0.42 0.16 25 / 0.15);
+  }
+
+  /* Soot background */
+  .bg-soot {
+    background-color: oklch(0.18 0.01 40);
+  }
+
+  /* Gold background */
+  .bg-gold {
+    background-color: oklch(0.72 0.13 75);
+  }
+
+  .bg-birch {
+    background-color: oklch(0.93 0.025 80);
+  }
+
+  /* Brand text */
+  .text-brand {
+    color: oklch(0.42 0.16 25);
+  }
+
+  /* Brand border */
+  .border-brand {
+    border-color: oklch(0.42 0.16 25);
+  }
+  .border-gold {
+    border-color: oklch(0.72 0.13 75);
+  }
+  .border-birch {
+    border-color: oklch(0.93 0.025 80);
+  }
+  .border-forest {
+    border-color: oklch(0.32 0.06 145);
+  }
+
+  .shadow-elevated {
+    box-shadow: 0 30px 60px -25px rgba(120, 20, 20, 0.35);
+  }
+  .shadow-card {
+    box-shadow: 0 8px 24px -12px rgba(30, 20, 15, 0.25);
+  }
+
+  .font-display {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+  }
+}

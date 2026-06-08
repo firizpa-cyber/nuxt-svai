@@ -1,16 +1,55 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const listProducts = createServerFn({ method: "GET" }).handler(async () => {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data, error } = await supabaseAdmin
-    .from("products")
-    .select("*")
-    .order("diameter_mm", { ascending: true })
-    .order("length_m", { ascending: true });
-  if (error) throw new Error(error.message);
-  return { products: data ?? [] };
+  try {
+    const csvPath = join(process.cwd(), "src", "db", "price-list.csv");
+    const csvContent = readFileSync(csvPath, "utf-8");
+    const lines = csvContent.split("\n").filter(line => line.trim());
+    const headers = lines[0].split(",");
+    
+    const products = lines.slice(1).map((line, idx) => {
+      const values = line.split(",");
+      const name = values[0] || "";
+      // Generate slug from name (transliterate and lowercase)
+      const slug = name
+        .toLowerCase()
+        .replace(/[^a-zа-яё0-9\s]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/[а-яё]/g, (c) => {
+          const map: Record<string, string> = {
+            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh',
+            'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
+            'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts',
+            'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya'
+          };
+          return map[c] || c;
+        });
+      
+      return {
+        id: crypto.randomUUID(),
+        name,
+        slug: slug || `product-${idx}`,
+        diameter_mm: Number(values[1]) || 0,
+        length_m: Number(values[2]) || 0,
+        wall_thickness_mm: Number(values[3]) || 0,
+        price: Number(values[4]) || 0,
+        install_price: Number(values[5]) || 0,
+        category: values[6] || "Стандарт",
+        in_stock: true,
+        image_url: "",
+        description: "",
+      };
+    }).filter(p => p.name);
+    
+    return { products };
+  } catch (error) {
+    console.error("Error reading CSV:", error);
+    return { products: [] };
+  }
 });
 
 const productSchema = z.object({

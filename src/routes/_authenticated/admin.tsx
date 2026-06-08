@@ -3,8 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { listAllOrders, updateOrderStatus, checkIsAdmin } from "@/lib/orders.functions";
 import { listProducts, upsertProduct, deleteProduct } from "@/lib/products.functions";
-import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,14 +56,6 @@ function OrdersAdmin() {
   const updateStatus = useServerFn(updateOrderStatus);
   const qc = useQueryClient();
   const q = useQuery({ queryKey: ["all-orders"], queryFn: () => fetchAll() });
-
-  useEffect(() => {
-    const ch = supabase.channel("admin-orders")
-      .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => {
-        qc.invalidateQueries({ queryKey: ["all-orders"] });
-      }).subscribe();
-    return () => { supabase.removeChannel(ch); };
-  }, [qc]);
 
   async function setStatus(id: string, status: string) {
     try {

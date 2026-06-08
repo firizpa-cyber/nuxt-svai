@@ -7,6 +7,64 @@ import { useMemo, useState } from "react";
 
 const productsQO = queryOptions({ queryKey: ["products"], queryFn: () => listProducts() });
 
+const GALLERY_PHOTOS = [
+  "photo_1_2026-06-06_11-15-46.jpg",
+  "photo_2_2026-06-06_11-15-46.jpg",
+  "photo_3_2026-06-06_11-15-46.jpg",
+  "photo_4_2026-06-06_11-15-46.jpg",
+  "photo_5_2026-06-06_11-15-46.jpg",
+  "photo_6_2026-06-06_11-15-46.jpg",
+  "photo_7_2026-06-06_11-15-46.jpg",
+  "photo_8_2026-06-06_11-15-46.jpg",
+  "photo_9_2026-06-06_11-15-46.jpg",
+  "photo_10_2026-06-06_11-15-46.jpg",
+  "photo_11_2026-06-06_11-15-46.jpg",
+  "photo_12_2026-06-06_11-15-46.jpg",
+  "photo_13_2026-06-06_11-15-46.jpg",
+  "photo_14_2026-06-06_11-15-46.jpg",
+  "photo_15_2026-06-06_11-15-46.jpg",
+  "photo_16_2026-06-06_11-15-46.jpg",
+  "photo_17_2026-06-06_11-15-46.jpg",
+  "photo_18_2026-06-06_11-15-46.jpg",
+  "photo_19_2026-06-06_11-15-46.jpg",
+  "photo_20_2026-06-06_11-15-46.jpg",
+  "photo_21_2026-06-06_11-15-46.jpg",
+  "photo_22_2026-06-06_11-15-46.jpg",
+  "photo_23_2026-06-06_11-15-46.jpg",
+  "photo_24_2026-06-06_11-15-46.jpg",
+  "1.jpg",
+  "123.jpg",
+  "1231.jpg",
+  "12311.jpg",
+  "1231111.jpg",
+  "123112.jpg",
+  "1231123.jpg",
+  "123122222.jpg",
+  "1231223.jpg",
+  "1234.jpg",
+  "1234122.jpg",
+  "123441222.jpg",
+  "12345.jpg",
+  "123451.jpg",
+  "123456.jpg",
+  "1234567.jpg",
+  "1234567123.jpg",
+  "12345678.jpg",
+  "123456781.jpg",
+  "12345678111.jpg",
+  "213.jpg",
+  "2222.jpg",
+  "23122.jpg",
+  "23412.jpg",
+  "23423.jpg",
+  "3122.jpg",
+  "31234.jpg",
+  "32.jpg",
+  "3231.jpg",
+  "41.jpg",
+  "41231.jpg",
+];
+
 export const Route = createFileRoute("/catalog")({
   head: () => ({
     meta: [
@@ -31,7 +89,30 @@ function CatalogPage() {
   const items = filter === "all" ? data.products : data.products.filter((p) => (p.category ?? "standard") === filter);
 
   const catLabel: Record<string, string> = {
-    all: "Все", light: "Лёгкие", standard: "Стандартные", heavy: "Усиленные", industrial: "Промышленные",
+    all: "Все",
+    "Винтовые сваи": "Винтовые сваи",
+    "Опоры": "Стальные опоры",
+    "Винтовые сваи под ключ": "Винтовые сваи под ключ",
+    "Оцинкованные сваи": "Оцинкованные сваи",
+    "Специальные сваи": "Специальные сваи",
+    "Железобетонные сваи": "Железобетонные сваи",
+    "Буронабивные сваи": "Буронабивные сваи",
+    "Готовые фундаменты": "Готовые фундаменты",
+    "Замена фундамента": "Замена фундамента",
+    "Поднятие фундамента": "Поднятие фундамента",
+    "Монтаж по типам объектов": "Монтаж по типам объектов",
+    "Услуги монтажа": "Услуги монтажа",
+    "Обвязка свай": "Обвязка свай",
+    "Комплектующие": "Комплектующие",
+    "Бурение и аренда": "Бурение и аренда",
+    "Металлоконструкции": "Металлоконструкции",
+    "Усиление фундамента": "Усиление фундамента",
+    "Утепление": "Утепление",
+    "Солнечные батареи": "Солнечные батареи",
+    light: "Лёгкие",
+    standard: "Стандартные",
+    heavy: "Усиленные",
+    industrial: "Промышленные",
   };
 
   return (
@@ -60,15 +141,22 @@ function CatalogPage() {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((p) => (
-          <article key={p.id} className="group bg-card rounded-lg border border-border overflow-hidden hover:border-brand hover:shadow-elevated transition-all">
+        {items.map((p, idx) => (
+          <Link key={p.id} to={`/product/${p.slug}` as any} className="group bg-card rounded-lg border border-border overflow-hidden hover:border-brand hover:shadow-elevated transition-all block">
             <div className="aspect-[5/3] bg-gradient-to-br from-soot via-soot/80 to-brand/40 relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-birch/90 text-center">
-                  <div className="font-display text-6xl font-bold">Ø{p.diameter_mm}</div>
-                  <div className="text-xs uppercase tracking-widest mt-1">{p.length_m} м</div>
-                </div>
-              </div>
+              {p.image_url && p.image_url !== '' ? (
+                <img
+                  src={p.image_url}
+                  alt={p.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={`/gallery/${GALLERY_PHOTOS[idx % GALLERY_PHOTOS.length]}`}
+                  alt={p.name}
+                  className="w-full h-full object-cover"
+                />
+              )}
               <div className="izba-roof absolute top-0 left-0 right-0 h-2" />
               {!p.in_stock && (
                 <div className="absolute top-3 right-3 px-2 py-1 rounded bg-soot/80 text-birch text-xs">Под заказ</div>
@@ -77,23 +165,31 @@ function CatalogPage() {
             <div className="p-5">
               <h2 className="font-display text-lg font-semibold leading-tight">{p.name}</h2>
               {p.description && <p className="mt-2 text-xs text-muted-foreground line-clamp-2">{p.description}</p>}
-              <dl className="mt-4 grid grid-cols-3 gap-2 text-xs">
-                <div><dt className="text-muted-foreground">Диаметр</dt><dd className="font-semibold">{p.diameter_mm} мм</dd></div>
-                <div><dt className="text-muted-foreground">Длина</dt><dd className="font-semibold">{p.length_m} м</dd></div>
-                <div><dt className="text-muted-foreground">Стенка</dt><dd className="font-semibold">{p.wall_thickness_mm} мм</dd></div>
-              </dl>
+              {p.diameter_mm > 0 && (
+                <dl className="mt-4 grid grid-cols-3 gap-2 text-xs">
+                  <div><dt className="text-muted-foreground">Диаметр</dt><dd className="font-semibold">{p.diameter_mm} мм</dd></div>
+                  <div><dt className="text-muted-foreground">Длина</dt><dd className="font-semibold">{p.length_m} м</dd></div>
+                  <div><dt className="text-muted-foreground">Стенка</dt><dd className="font-semibold">{p.wall_thickness_mm} мм</dd></div>
+                </dl>
+              )}
               <div className="mt-4 pt-4 border-t border-border flex items-end justify-between">
                 <div>
-                  <div className="text-xs text-muted-foreground">Цена сваи</div>
-                  <div className="font-display text-2xl font-bold text-brand">{formatRub(Number(p.price))}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">+ монтаж {formatRub(Number(p.install_price))}</div>
+                  {Number(p.price) > 0 && (
+                    <>
+                      <div className="text-xs text-muted-foreground">Цена</div>
+                      <div className="font-display text-2xl font-bold text-brand">{formatRub(Number(p.price))}</div>
+                    </>
+                  )}
+                  {Number(p.install_price) > 0 && (
+                    <div className="text-xs text-muted-foreground mt-0.5">+ монтаж {formatRub(Number(p.install_price))}</div>
+                  )}
                 </div>
-                <Link to="/calculator" search={{ d: p.diameter_mm }}>
+                <a href={`/calculator?d=${p.diameter_mm}`}>
                   <Button size="sm" className="bg-brand hover:bg-brand/90 text-brand-foreground">Заказать</Button>
-                </Link>
+                </a>
               </div>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
     </div>

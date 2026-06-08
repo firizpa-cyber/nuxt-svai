@@ -9,16 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PricesRouteImport } from './routes/prices'
+import { Route as OrderRouteImport } from './routes/order'
 import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as CatalogRouteImport } from './routes/catalog'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductSlugRouteImport } from './routes/product.$slug'
+import { Route as ApiSendOrderRouteImport } from './routes/api/send-order'
 import { Route as AuthenticatedOrdersRouteImport } from './routes/_authenticated/orders'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
+const PricesRoute = PricesRouteImport.update({
+  id: '/prices',
+  path: '/prices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderRoute = OrderRouteImport.update({
+  id: '/order',
+  path: '/order',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactsRoute = ContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
@@ -27,6 +42,11 @@ const ContactsRoute = ContactsRouteImport.update({
 const CatalogRoute = CatalogRouteImport.update({
   id: '/catalog',
   path: '/catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorRoute = CalculatorRouteImport.update({
@@ -53,6 +73,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductSlugRoute = ProductSlugRouteImport.update({
+  id: '/product/$slug',
+  path: '/product/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSendOrderRoute = ApiSendOrderRouteImport.update({
+  id: '/api/send-order',
+  path: '/api/send-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedOrdersRoute = AuthenticatedOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
@@ -69,20 +99,30 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
+  '/cart': typeof CartRoute
   '/catalog': typeof CatalogRoute
   '/contacts': typeof ContactsRoute
+  '/order': typeof OrderRoute
+  '/prices': typeof PricesRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/orders': typeof AuthenticatedOrdersRoute
+  '/api/send-order': typeof ApiSendOrderRoute
+  '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
+  '/cart': typeof CartRoute
   '/catalog': typeof CatalogRoute
   '/contacts': typeof ContactsRoute
+  '/order': typeof OrderRoute
+  '/prices': typeof PricesRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/orders': typeof AuthenticatedOrdersRoute
+  '/api/send-order': typeof ApiSendOrderRoute
+  '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -91,10 +131,15 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
+  '/cart': typeof CartRoute
   '/catalog': typeof CatalogRoute
   '/contacts': typeof ContactsRoute
+  '/order': typeof OrderRoute
+  '/prices': typeof PricesRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/orders': typeof AuthenticatedOrdersRoute
+  '/api/send-order': typeof ApiSendOrderRoute
+  '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -103,20 +148,30 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/calculator'
+    | '/cart'
     | '/catalog'
     | '/contacts'
+    | '/order'
+    | '/prices'
     | '/admin'
     | '/orders'
+    | '/api/send-order'
+    | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/auth'
     | '/calculator'
+    | '/cart'
     | '/catalog'
     | '/contacts'
+    | '/order'
+    | '/prices'
     | '/admin'
     | '/orders'
+    | '/api/send-order'
+    | '/product/$slug'
   id:
     | '__root__'
     | '/'
@@ -124,10 +179,15 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/calculator'
+    | '/cart'
     | '/catalog'
     | '/contacts'
+    | '/order'
+    | '/prices'
     | '/_authenticated/admin'
     | '/_authenticated/orders'
+    | '/api/send-order'
+    | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -136,12 +196,31 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   CalculatorRoute: typeof CalculatorRoute
+  CartRoute: typeof CartRoute
   CatalogRoute: typeof CatalogRoute
   ContactsRoute: typeof ContactsRoute
+  OrderRoute: typeof OrderRoute
+  PricesRoute: typeof PricesRoute
+  ApiSendOrderRoute: typeof ApiSendOrderRoute
+  ProductSlugRoute: typeof ProductSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/prices': {
+      id: '/prices'
+      path: '/prices'
+      fullPath: '/prices'
+      preLoaderRoute: typeof PricesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order': {
+      id: '/order'
+      path: '/order'
+      fullPath: '/order'
+      preLoaderRoute: typeof OrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contacts': {
       id: '/contacts'
       path: '/contacts'
@@ -154,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/catalog'
       fullPath: '/catalog'
       preLoaderRoute: typeof CatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculator': {
@@ -189,6 +275,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product/$slug': {
+      id: '/product/$slug'
+      path: '/product/$slug'
+      fullPath: '/product/$slug'
+      preLoaderRoute: typeof ProductSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/send-order': {
+      id: '/api/send-order'
+      path: '/api/send-order'
+      fullPath: '/api/send-order'
+      preLoaderRoute: typeof ApiSendOrderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/orders': {
@@ -227,9 +327,24 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   CalculatorRoute: CalculatorRoute,
+  CartRoute: CartRoute,
   CatalogRoute: CatalogRoute,
   ContactsRoute: ContactsRoute,
+  OrderRoute: OrderRoute,
+  PricesRoute: PricesRoute,
+  ApiSendOrderRoute: ApiSendOrderRoute,
+  ProductSlugRoute: ProductSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

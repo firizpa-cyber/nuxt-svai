@@ -3084,7 +3084,7 @@ const _Ufd3L56EalAqITzArb49A161ZVay2IXsbbXTOGSc2jE = defineNitroPlugin(async (ni
 
 const rootDir = "D:/вм/project-03b78a3c/nuxt-svai";
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"name":"description","content":"Производство и монтаж винтовых свай в Сургуте и ХМАО. Диаметры Ø57–325 мм, монтаж за 1 день, гарантия по договору. Бесплатный выезд замерщика. Калькулятор онлайн."},{"name":"keywords","content":"винтовые сваи Сургут, монтаж свай Сургут, фундамент на винтовых сваях, купить сваи Сургут, свайный фундамент ХМАО, установка свай под ключ"},{"property":"og:type","content":"website"},{"property":"og:site_name","content":"СтройМонтаж-86 — Завод винтовых свай"},{"property":"og:locale","content":"ru_RU"},{"name":"geo.region","content":"RU-KHM"},{"name":"geo.placename","content":"Сургут"},{"name":"geo.position","content":"61.254;73.396"},{"name":"ICBM","content":"61.254, 73.396"}],"link":[{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"}],"style":[],"script":[],"noscript":[],"charset":"utf-8","viewport":"width=device-width, initial-scale=1","title":"Завод винтовых свай СтройМонтаж-86 — производство и монтаж в Сургуте и ХМАО"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"name":"description","content":"Производство и монтаж винтовых свай в Сургуте и ХМАО. Диаметры Ø57–325 мм, монтаж за 1 день, гарантия по договору. Бесплатный выезд замерщика. Калькулятор онлайн."},{"name":"keywords","content":"винтовые сваи Сургут, монтаж свай Сургут, фундамент на винтовых сваях, купить сваи Сургут, свайный фундамент ХМАО, установка свай под ключ"},{"property":"og:type","content":"website"},{"property":"og:site_name","content":"СтройМонтаж-86 — Завод винтовых свай"},{"property":"og:locale","content":"ru_RU"},{"name":"geo.region","content":"RU-KHM"},{"name":"geo.placename","content":"Сургут"},{"name":"geo.position","content":"61.254;73.396"},{"name":"ICBM","content":"61.254, 73.396"}],"link":[{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"},{"rel":"icon","type":"image/png","href":"/favicon.png"}],"style":[],"script":[],"noscript":[],"charset":"utf-8","viewport":"width=device-width, initial-scale=1","title":"Завод винтовых свай СтройМонтаж-86 — производство и монтаж в Сургуте и ХМАО"};
 
 const appRootTag = "div";
 
@@ -4427,7 +4427,7 @@ async function resolveSitemapSources(sources, event) {
   )).flat();
 }
 
-const staticConfig = {"isI18nMapped":false,"sitemapName":"sitemap.xml","isMultiSitemap":false,"excludeAppSources":[],"cacheMaxAgeSeconds":0,"autoLastmod":false,"defaultSitemapsChunkSize":1000,"minify":false,"sortEntries":true,"discoverImages":true,"discoverVideos":true,"sitemapsPathPrefix":"/__sitemap__/","isNuxtContentDocumentDriven":false,"xsl":"/__sitemap__/style.xsl","xslTips":true,"xslColumns":[{"label":"URL","width":"50%"},{"label":"Images","width":"25%","select":"count(image:image)"},{"label":"Last Updated","width":"25%","select":"concat(substring(sitemap:lastmod,0,11),concat(' ', substring(sitemap:lastmod,12,5)),concat(' ', substring(sitemap:lastmod,20,6)))"}],"credits":true,"version":"8.0.15","sitemaps":{"sitemap.xml":{"sitemapName":"sitemap.xml","route":"sitemap.xml","defaults":{},"include":[],"exclude":["/_**","/_nuxt/**"],"includeAppSources":true}}};
+const staticConfig = {"isI18nMapped":false,"sitemapName":"sitemap.xml","isMultiSitemap":false,"excludeAppSources":[],"cacheMaxAgeSeconds":0,"autoLastmod":false,"defaultSitemapsChunkSize":1000,"minify":false,"sortEntries":true,"discoverImages":true,"discoverVideos":true,"sitemapsPathPrefix":"/__sitemap__/","isNuxtContentDocumentDriven":false,"xsl":"/__sitemap__/style.xsl","xslTips":true,"xslColumns":[{"label":"URL","width":"50%"},{"label":"Images","width":"25%","select":"count(image:image)"},{"label":"Last Updated","width":"25%","select":"concat(substring(sitemap:lastmod,0,11),concat(' ', substring(sitemap:lastmod,12,5)),concat(' ', substring(sitemap:lastmod,20,6)))"}],"credits":true,"version":"8.0.15","sitemaps":{"sitemap.xml":{"sitemapName":"sitemap.xml","route":"sitemap.xml","defaults":{},"include":[],"exclude":["/_**","/_nuxt/**","/_nuxt/**"],"includeAppSources":true}}};
 
 function xmlEscape(str) {
   return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
@@ -6824,9 +6824,6 @@ const sources$1 = [
         },
         "urls": [
             {
-                "loc": "/auth"
-            },
-            {
                 "loc": "/cart"
             },
             {
@@ -6837,9 +6834,6 @@ const sources$1 = [
             },
             {
                 "loc": "/order"
-            },
-            {
-                "loc": "/orders"
             },
             {
                 "loc": "/prices"

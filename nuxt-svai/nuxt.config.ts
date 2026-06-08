@@ -89,6 +89,7 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap',
         },
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
       ],
     },
   },

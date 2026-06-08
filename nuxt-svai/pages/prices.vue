@@ -186,7 +186,9 @@ import {
   CheckCircle2 as CheckCircle2Icon,
   BadgeInfo as BadgeInfoIcon,
 } from 'lucide-vue-next'
-import { formatRub } from '~/utils/format'
+import { formatRub } from '@/utils/format'
+import { useSeoMeta, useFetch } from '#app'
+import { computed } from 'vue'
 
 useSeoMeta({
   title: 'Цены на винтовые сваи и монтаж фундамента в Сургуте 2026 — Прайс-лист',

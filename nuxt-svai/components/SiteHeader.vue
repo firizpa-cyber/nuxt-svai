@@ -49,14 +49,6 @@
           </button>
         </NuxtLink>
 
-        <!-- Auth button -->
-        <NuxtLink :to="isLoggedIn ? '/orders' : '/auth'">
-          <button class="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-[oklch(0.85_0.02_70)] rounded-md hover:border-[oklch(0.42_0.16_25)] transition-colors">
-            <UserIcon class="h-4 w-4" />
-            <span class="hidden sm:inline">{{ isLoggedIn ? 'Кабинет' : 'Войти' }}</span>
-          </button>
-        </NuxtLink>
-
         <!-- Mobile menu toggle -->
         <button
           class="lg:hidden p-2 -mr-2"
@@ -94,7 +86,9 @@
 </template>
 
 <script setup lang="ts">
-import { Phone as PhoneIcon, Menu as MenuIcon, X as XIcon, User as UserIcon, ShoppingCart as ShoppingCartIcon } from 'lucide-vue-next'
+import { Phone as PhoneIcon, Menu as MenuIcon, X as XIcon, ShoppingCart as ShoppingCartIcon } from 'lucide-vue-next'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute } from '#app'
 
 const route = useRoute()
 const mobileOpen = ref(false)
@@ -116,13 +110,11 @@ const isActive = (path: string) => {
 // Cart count from localStorage
 const cartCount = ref(0)
 
-const isLoggedIn = ref(false)
-
 const updateCart = () => {
   if (import.meta.client) {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]')
     cartCount.value = cart.reduce((sum: number, item: any) => sum + item.qty, 0)
-    isLoggedIn.value = !!localStorage.getItem('admin_session')
+    
   }
 }
 
